@@ -1,6 +1,9 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm" class="form w-full border mt-4">
+    <form
+      @submit.prevent="submitForm"
+      class="form w-full border mt-4 bg-gray-100"
+    >
       <span ref="spanRef" class="hide">{{ inputText }}</span>
       <input
         id="textInput"
@@ -8,36 +11,42 @@
         v-model="inputText"
         @input="handleInput"
         @keydown="handleKeyDown"
-        class="border p-2 w-full bg-gray-100 focus:border-blue-500"
+        class="border p-2 w-full focus:border-blue-500 bg-gray-100"
       />
       <AppSuggestions :cursorPosition="cursorPosition" />
       <AppInputTarget :cursorPosition="cursorPosition" />
       <AppDatePicker :cursorPosition="cursorPosition" />
     </form>
     <AppAddNewTarget />
-    <AppRadioButtonList
-      label="Target unit"
-      :list="dateList"
-      @select-parameter="selectParameter"
-    />
+    <AppButtonList />
   </div>
 </template>
   
   <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
-import AppRadioButtonList from "./AppRadioButtonList.vue";
+import AppButtonList from "./AppButtonList.vue";
 import AppAddNewTarget from "./AppAddNewTarget.vue";
 import AppDatePicker from "./AppDatePicker.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
+import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorSettingsStore = useEditorSettingsStore();
+const editorDataStore = useEditorDataStore();
 
-const inputText = ref("");
 const inputRef = ref(null);
 const spanRef = ref(null);
 const cursorPosition = ref({ top: 10, left: 0 });
+
+const inputText = computed({
+  get() {
+    return editorDataStore.activeTarget?.text;
+  },
+  set(value) {
+    editorDataStore.updateTarget({ text: value });
+  },
+});
 
 const dateList = [
   { label: "Year", value: "year" },
@@ -57,7 +66,7 @@ const handleInput = (e) => {
 };
 
 const submitForm = () => {
-  console.log("Форма отправлена:", inputText.value);
+  console.log(inputText.value);
 };
 
 const handleKeyDown = (event) => {
@@ -66,15 +75,12 @@ const handleKeyDown = (event) => {
     editorSettingsStore.toggleListSuggestions(false);
   }
 };
-
-const selectParameter = (value) => {
-  console.log("value ", value);
-};
 </script>
   
   <style scoped>
 .form {
   margin-top: 20px;
+  padding-bottom: 30px;
   position: relative;
 }
 .hide {

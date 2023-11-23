@@ -9,16 +9,17 @@
   >
     <form class="bg-white rounded">
       <input
-        id="targetInput"
-        v-model="inputText"
+        ref="inputRef"
+        v-model.trim="inputText"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text"
         placeholder="target"
+        @change="onChange"
       />
     </form>
 
     <div class="ml-4">
-      <p class="text-gray-700 text-xl">{{ inputText }}</p>
+      <p class="text-gray-700 text-xl">{{ targetUnit }}</p>
     </div>
   </div>
 </template>
@@ -26,8 +27,10 @@
   <script setup>
 import { ref, computed, watch } from "vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
+import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorSettingsStore = useEditorSettingsStore();
+const editorDataStore = useEditorDataStore();
 
 defineProps({
   cursorPosition: {
@@ -35,9 +38,28 @@ defineProps({
   },
 });
 
+const inputRef = ref(null);
 const inputText = ref("");
 
 const toggle = computed(() => editorSettingsStore.showPopupTargetInput);
+
+const targetUnit = computed(() => editorDataStore.activeTarget?.targetUnit);
+
+const onChange = () => {
+  let text = editorDataStore.activeTarget?.text;
+  if (text) text = text.slice(0, text.length - 1);
+  const newText = text + " " + inputText.value + targetUnit.value;
+  editorDataStore.updateTarget({ target: inputText.value });
+  editorDataStore.updateTarget({ text: newText });
+  editorSettingsStore.togglePopupTargetInput(false);
+};
+
+watch(
+  () => inputRef.value,
+  (val) => {
+    if (val) inputRef.value.focus();
+  }
+);
 
 watch(
   () => toggle.value,

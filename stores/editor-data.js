@@ -1,9 +1,26 @@
-export const useEditorSettingsStore = defineStore("store-editor", () => {
-  const count = ref(0);
-  const doubleCount = computed(() => count.value * 2);
-  function increment() {
-    count.value++;
+export const useEditorDataStore = defineStore("editor-data", () => {
+  const item = {
+    target: "",
+    date: "",
+    baseline: "",
+    targetUnit: "%",
+    text: "",
+  };
+
+  const targets = ref([{ ...item }]);
+
+  const activeTarget = computed(() => targets.value.at(-1));
+
+  const targetList = computed(() => targets.value);
+
+  function addTargetInList() {
+    targets.value.push({ ...item });
   }
 
-  return { doubleCount, increment };
+  function updateTarget(value) {
+    const index = targets.value.length - 1;
+    targets.value[index] = { ...activeTarget.value, ...value };
+  }
+
+  return { activeTarget, targetList, addTargetInList, updateTarget };
 });

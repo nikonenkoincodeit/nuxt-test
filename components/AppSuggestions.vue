@@ -8,8 +8,26 @@
     }"
   >
     <ul class="bg-white border rounded shadow-md">
-      <li @click="addTarget" class="text-center py-2">insert target</li>
-      <li @click="addDeadline" class="text-center py-2">insert deadline</li>
+      <li>
+        <button
+          :disabled="targetBtn"
+          type="button"
+          @click="addTarget"
+          class="text-center py-2 w-full hover:bg-gray-300"
+        >
+          insert target
+        </button>
+      </li>
+      <li>
+        <button
+          :disabled="deadlineBtn"
+          type="button"
+          @click="addDeadline"
+          class="text-center py-2 w-full hover:bg-gray-300"
+        >
+          insert deadline
+        </button>
+      </li>
     </ul>
   </div>
 </template>
@@ -17,6 +35,10 @@
 <script setup>
 import { computed } from "vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
+import { useEditorDataStore } from "~/stores/editor-data";
+
+const editorSettingsStore = useEditorSettingsStore();
+const editorDataStore = useEditorDataStore();
 
 defineProps({
   cursorPosition: {
@@ -24,17 +46,15 @@ defineProps({
   },
 });
 
-const editorSettingsStore = useEditorSettingsStore();
-
 const toggle = computed(() => editorSettingsStore.showListSuggestions);
+const targetBtn = computed(() => !!editorDataStore.activeTarget?.target);
+const deadlineBtn = computed(() => !!editorDataStore.activeTarget?.baseline);
 
 const addTarget = () => {
-  console.log(123);
   editorSettingsStore.togglePopupTargetInput(true);
 };
 
 const addDeadline = () => {
-  console.log(5555);
   editorSettingsStore.toggleDatePicker(true);
 };
 
@@ -50,4 +70,7 @@ watch(
 </script>
 
 <style scoped>
+button:disabled {
+  opacity: 0.6;
+}
 </style>
