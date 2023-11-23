@@ -34,26 +34,29 @@
   <script setup>
 import { ref } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
+import { useEditorSettingsStore } from "~/stores/editor-settings";
+
+const editorSettingsStore = useEditorSettingsStore();
 
 const inputText = ref("");
 const inputRef = ref(null);
 const spanRef = ref(null);
-const showSuggestions = ref(false);
+// const showSuggestions = ref(false);
 const cursorPosition = ref({ top: 0, left: 0 });
 
 const handleInput = (e) => {
   const lastChar = inputText.value.slice(-1);
   const lastCharIndex = inputText.selectionStart;
-
-  if (lastChar === "/") {
-    cursorPosition.value = {
-      top: 10,
-      left: spanRef.value.offsetWidth + 10,
-    };
-    showSuggestions.value = true;
-  } else {
-    showSuggestions.value = false;
-  }
+  editorSettingsStore.toggleListSuggestions(lastChar === "/");
+  //   if (lastChar === "/") {
+  cursorPosition.value = {
+    top: 10,
+    left: spanRef.value.offsetWidth + 10,
+  };
+  //     showSuggestions.value = true;
+  //   } else {
+  //     showSuggestions.value = false;
+  //   }
 };
 
 // const addGoal = () => {

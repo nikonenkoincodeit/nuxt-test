@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="showSuggestions"
+    v-if="toggle"
     class="list absolute mt-1 w-40"
     :style="{
       top: cursorPosition.top + 'px',
@@ -15,23 +15,27 @@
 </template>
 
 <script setup>
-// import { inject } from "vue";
+import { computed } from "vue";
+import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 defineProps({
   cursorPosition: {
     type: Object,
   },
-  showSuggestions: {
-    type: Boolean,
-  },
 });
+
+const editorSettingsStore = useEditorSettingsStore();
+
+const toggle = computed(() => editorSettingsStore.getListSuggestions);
 
 const addTarget = () => {
   console.log(123);
+  editorSettingsStore.toggleListSuggestions(false);
 };
 
 const addDeadline = () => {
   console.log(5555);
+  editorSettingsStore.toggleListSuggestions(false);
 };
 </script>
 
