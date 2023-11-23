@@ -13,6 +13,11 @@
       <AppSuggestions :cursorPosition="cursorPosition" />
       <AppInputTarget :cursorPosition="cursorPosition" />
     </form>
+    <AppRadioButtonList
+      label="Target unit"
+      :list="dateList"
+      @select-parameter="selectParameter"
+    />
   </div>
 </template>
   
@@ -20,6 +25,7 @@
 import { ref } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
+import AppRadioButtonList from "./AppRadioButtonList.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 const editorSettingsStore = useEditorSettingsStore();
@@ -28,6 +34,12 @@ const inputText = ref("");
 const inputRef = ref(null);
 const spanRef = ref(null);
 const cursorPosition = ref({ top: 10, left: 0 });
+
+const dateList = [
+  { label: "Year", value: "year" },
+  { label: "Month", value: "month" },
+  { label: "Day", value: "day" },
+];
 
 const handleInput = (e) => {
   const lastChar = inputText.value.slice(-1);
@@ -49,6 +61,10 @@ const handleKeyDown = (event) => {
     editorSettingsStore.togglePopupTargetInput(false);
     editorSettingsStore.toggleListSuggestions(false);
   }
+};
+
+const selectParameter = (value) => {
+  console.log("value ", value);
 };
 </script>
   
