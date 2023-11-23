@@ -7,7 +7,6 @@
           <AppEditor />
         </div>
         <div class="border">
-          2
           <AppPreview />
         </div>
       </div>
