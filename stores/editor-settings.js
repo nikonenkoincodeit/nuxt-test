@@ -17,10 +17,22 @@ export const useEditorSettingsStore = defineStore("editor-settings", () => {
     popupTargetInput.value = value;
   }
 
+  //------------
+
+  const datePicker = ref(false);
+
+  const showDatePicker = computed(() => datePicker.value);
+
+  function toggleDatePicker(value) {
+    datePicker.value = value;
+  }
+
   return {
     showListSuggestions,
     toggleListSuggestions,
     showPopupTargetInput,
     togglePopupTargetInput,
+    showDatePicker,
+    toggleDatePicker,
   };
 });

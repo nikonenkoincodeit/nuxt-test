@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="toggle"
-    class="flex items-center justify-center h-screen shadow-md bg-gray-200 border p-2 absolute h-auto"
+    class="flex items-center justify-center shadow-md bg-gray-200 border p-2 absolute h-auto"
     :style="{
       top: cursorPosition.top + 'px',
       left: cursorPosition.left + 'px',
@@ -43,6 +43,7 @@ watch(
   () => toggle.value,
   (val) => {
     if (val) {
+      editorSettingsStore.toggleDatePicker(false);
       editorSettingsStore.toggleListSuggestions(false);
     }
   }

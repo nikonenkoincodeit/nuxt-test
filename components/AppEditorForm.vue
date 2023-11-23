@@ -12,6 +12,7 @@
       />
       <AppSuggestions :cursorPosition="cursorPosition" />
       <AppInputTarget :cursorPosition="cursorPosition" />
+      <AppDatePicker :cursorPosition="cursorPosition" />
     </form>
     <AppAddNewTarget />
     <AppRadioButtonList
@@ -28,6 +29,7 @@ import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppRadioButtonList from "./AppRadioButtonList.vue";
 import AppAddNewTarget from "./AppAddNewTarget.vue";
+import AppDatePicker from "./AppDatePicker.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 const editorSettingsStore = useEditorSettingsStore();

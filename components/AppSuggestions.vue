@@ -31,13 +31,22 @@ const toggle = computed(() => editorSettingsStore.showListSuggestions);
 const addTarget = () => {
   console.log(123);
   editorSettingsStore.togglePopupTargetInput(true);
-  // editorSettingsStore.toggleListSuggestions(false);
 };
 
 const addDeadline = () => {
   console.log(5555);
-  editorSettingsStore.toggleListSuggestions(false);
+  editorSettingsStore.toggleDatePicker(true);
 };
+
+watch(
+  () => toggle.value,
+  (val) => {
+    if (val) {
+      editorSettingsStore.toggleDatePicker(false);
+      editorSettingsStore.togglePopupTargetInput(false);
+    }
+  }
+);
 </script>
 
 <style scoped>

@@ -1,7 +1,6 @@
 <template>
   <main class="py-10">
     <div class="container mx-auto px-5">
-      <!-- <h1 class="text-3xl font-bold underline">Hello world!</h1> -->
       <div class="content">
         <div class="border">
           <AppEditor />
@@ -14,8 +13,12 @@
   </main>
 </template>
 <script setup>
+import { ref } from "vue";
+
 import AppEditor from "~/components/AppEditor.vue";
 import AppPreview from "~/components/AppPreview.vue";
+
+import "@vuepic/vue-datepicker/dist/main.css";
 </script>
 <style scoped>
 .content {

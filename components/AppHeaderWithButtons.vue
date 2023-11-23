@@ -28,7 +28,7 @@ const selectTarget = () => {
 };
 
 const selectDeadline = () => {
-  console.log(12345);
+  editorSettingsStore.toggleDatePicker(true);
 };
 </script>
   
