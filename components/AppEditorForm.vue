@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm" class="form w-full border my-4">
+    <form @submit.prevent="submitForm" class="form w-full border mt-4">
       <span ref="spanRef" class="hide">{{ inputText }}</span>
       <input
         id="textInput"
@@ -13,6 +13,7 @@
       <AppSuggestions :cursorPosition="cursorPosition" />
       <AppInputTarget :cursorPosition="cursorPosition" />
     </form>
+    <AppAddNewTarget />
     <AppRadioButtonList
       label="Target unit"
       :list="dateList"
@@ -26,6 +27,7 @@ import { ref } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppRadioButtonList from "./AppRadioButtonList.vue";
+import AppAddNewTarget from "./AppAddNewTarget.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 const editorSettingsStore = useEditorSettingsStore();
@@ -71,7 +73,6 @@ const selectParameter = (value) => {
   <style scoped>
 .form {
   margin-top: 20px;
-  margin-bottom: 20px;
   position: relative;
 }
 .hide {

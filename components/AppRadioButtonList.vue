@@ -2,7 +2,7 @@
   <div>
     <label class="block font-bold text-gray-700 mb-2">{{ label }}</label>
     <div>
-      <template v-for="(item, index) in list" :key="index">
+      <template v-for="item in list" :key="item.value">
         <label class="inline-flex items-center mr-4">
           <input
             type="radio"
