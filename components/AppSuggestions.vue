@@ -26,11 +26,12 @@ defineProps({
 
 const editorSettingsStore = useEditorSettingsStore();
 
-const toggle = computed(() => editorSettingsStore.getListSuggestions);
+const toggle = computed(() => editorSettingsStore.showListSuggestions);
 
 const addTarget = () => {
   console.log(123);
-  editorSettingsStore.toggleListSuggestions(false);
+  editorSettingsStore.togglePopupTargetInput(true);
+  // editorSettingsStore.toggleListSuggestions(false);
 };
 
 const addDeadline = () => {

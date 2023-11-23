@@ -19,8 +19,12 @@
 </template>
   
   <script setup>
+import { useEditorSettingsStore } from "~/stores/editor-settings";
+
+const editorSettingsStore = useEditorSettingsStore();
+
 const selectTarget = () => {
-  console.log(123);
+  editorSettingsStore.togglePopupTargetInput(true);
 };
 
 const selectDeadline = () => {
