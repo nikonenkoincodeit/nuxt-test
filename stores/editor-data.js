@@ -1,7 +1,7 @@
 export const useEditorDataStore = defineStore("editor-data", () => {
   const item = {
     target: "",
-    date: "",
+    deadline: "",
     baseline: "",
     targetUnit: "%",
     text: "",

@@ -10,7 +10,7 @@
         insert target
       </button>
       <button
-        v-if="showBtnBaseline"
+        v-if="showBtnDeadline"
         class="py-2 px-4 bg-red-500 hover:bg-red-700 text-white rounded"
         @click="selectDeadline"
       >
@@ -29,7 +29,8 @@ const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
 const showBtnTarget = computed(() => !editorDataStore.activeTarget?.target);
-const showBtnBaseline = computed(() => !editorDataStore.activeTarget?.baseline);
+
+const showBtnDeadline = computed(() => !editorDataStore.activeTarget?.deadline);
 
 const selectTarget = () => {
   editorSettingsStore.togglePopupTargetInput(true);

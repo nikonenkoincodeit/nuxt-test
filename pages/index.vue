@@ -1,18 +1,16 @@
 <template>
-  <ClientOnly>
-    <main class="py-10">
-      <div class="container mx-auto px-5">
-        <div class="content">
-          <div class="border">
-            <AppEditor />
-          </div>
-          <div class="border">
-            <AppPreview />
-          </div>
+  <main class="py-10">
+    <div class="container mx-auto px-5">
+      <div class="content">
+        <div class="border">
+          <AppEditor />
+        </div>
+        <div class="border">
+          <AppPreview />
         </div>
       </div>
-    </main>
-  </ClientOnly>
+    </div>
+  </main>
 </template>
 <script setup>
 import { ref } from "vue";

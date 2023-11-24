@@ -52,6 +52,7 @@ const onChange = () => {
   editorDataStore.updateTarget({ target: inputText.value });
   editorDataStore.updateTarget({ text: newText });
   editorSettingsStore.togglePopupTargetInput(false);
+  inputText.value = "";
 };
 
 watch(

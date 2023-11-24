@@ -46,9 +46,17 @@ defineProps({
   },
 });
 
-const toggle = computed(() => editorSettingsStore.showListSuggestions);
 const targetBtn = computed(() => !!editorDataStore.activeTarget?.target);
-const deadlineBtn = computed(() => !!editorDataStore.activeTarget?.baseline);
+const deadlineBtn = computed(() => !!editorDataStore.activeTarget?.deadline);
+
+const toggle = computed(
+  () =>
+    editorSettingsStore.showListSuggestions &&
+    !(
+      editorDataStore.activeTarget?.target &&
+      editorDataStore.activeTarget?.deadline
+    )
+);
 
 const addTarget = () => {
   editorSettingsStore.togglePopupTargetInput(true);
@@ -70,6 +78,9 @@ watch(
 </script>
 
 <style scoped>
+.list {
+  z-index: 100;
+}
 button:disabled {
   opacity: 0.6;
 }

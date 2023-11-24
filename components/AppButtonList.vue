@@ -7,6 +7,14 @@
     keyVal="targetUnit"
     @select-parameter="selectParameter"
   />
+  <AppRadioButtonList
+    v-if="targetDeadline"
+    label="Deadline"
+    :list="dateList"
+    method="updateTarget"
+    keyVal="deadline"
+    @select-parameter="selectParameter"
+  />
 </template>
 
 <script setup>
@@ -19,6 +27,9 @@ const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
 const target = computed(() => editorSettingsStore.showPopupTargetInput);
+
+const targetDeadline = computed(() => editorSettingsStore.showDatePicker);
+
 const selectedUnit = computed(() => editorDataStore.activeTarget?.targetUnit);
 
 const selectParameter = (value) => {
