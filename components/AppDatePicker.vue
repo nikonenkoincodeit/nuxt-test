@@ -29,27 +29,28 @@ const props = defineProps({
   },
 });
 
+const index = props.index;
+
 const toggle = computed(
-  () => editorSettingsStore.allSetting[props.index]?.datePicker
+  () => editorDataStore.targetList[index]?.showPopupDeadline
 );
 
-const deadline = computed(() => editorDataStore.activeTarget?.deadline);
-const text = computed(() => editorDataStore.activeTarget?.text);
-const index = computed(() => editorSettingsStore.getActiveItem);
+const deadline = computed(() => editorDataStore.targetList[index]?.deadline);
+const text = computed(() => editorDataStore.targetList[index]?.text);
 
 const date = ref(null);
 
 const handleDate = (modelData) => {
   date.value = modelData.toDateString();
-  editorDataStore.updateTarget({ deadline: date.value }, index.value);
+  editorDataStore.updateTarget({ deadline: date.value }, index);
 };
-console.log(deadline.value);
+
 watch(
   () => deadline.value,
   (val) => {
     const newText = text.value.slice(0, text.value.length - 1) + " " + val;
-    editorDataStore.updateTarget({ text: newText }, index.value);
-    editorSettingsStore.toggleDatePicker(false);
+    editorDataStore.updateTarget({ text: newText }, index);
+    editorDataStore.updateTarget({ showPopupDeadline: false }, index);
   }
 );
 
@@ -57,8 +58,8 @@ watch(
   () => toggle.value,
   (val) => {
     if (val) {
-      editorSettingsStore.togglePopupTargetInput(false);
-      editorSettingsStore.toggleListSuggestions(false);
+      editorDataStore.updateTarget({ showPopupList: false }, index);
+      editorDataStore.updateTarget({ showPopupTarget: false }, index);
     }
   }
 );

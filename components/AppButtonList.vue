@@ -3,7 +3,6 @@
     v-if="target"
     label="Target unit"
     :list="targetUnit"
-    method="updateTarget"
     keyVal="targetUnit"
     @select-parameter="selectParameter"
   />
@@ -11,7 +10,6 @@
     v-if="targetDeadline"
     label="Deadline"
     :list="dateList"
-    method="updateTarget"
     keyVal="deadline"
     @select-parameter="selectParameter"
   />
@@ -23,14 +21,21 @@ import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 import { targetUnit, dateList } from "~/data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
-const target = computed(() => editorSettingsStore.showPopupTargetInput);
+const index = computed(() => editorDataStore.getActiveItem);
 
-const targetDeadline = computed(() => editorSettingsStore.showDatePicker);
+const target = computed(
+  () => editorDataStore.targetList[index.value]?.showPopupTarget
+);
 
-const selectedUnit = computed(() => editorDataStore.activeTarget?.targetUnit);
+const targetDeadline = computed(
+  () => editorDataStore.targetList[index.value]?.showPopupDeadline
+);
+
+const selectedUnit = computed(
+  () => editorDataStore.targetList[index.value]?.targetUnit
+);
 
 const selectParameter = (value) => {
   console.log("value ", value);

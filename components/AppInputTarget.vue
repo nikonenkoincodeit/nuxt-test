@@ -29,7 +29,6 @@ import { ref, computed, watch } from "vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
 const props = defineProps({
@@ -43,22 +42,23 @@ const props = defineProps({
 
 const inputRef = ref(null);
 const inputText = ref("");
-const index = computed(() => editorSettingsStore.getActiveItem);
-console.log("index ", index.value);
+const index = props.index;
+
 const toggle = computed(
-  () => editorSettingsStore.allSetting[props.index]?.target
+  () => editorDataStore.targetList[index]?.showPopupTarget
 );
 
-const targetUnit = computed(() => editorDataStore.activeTarget?.targetUnit);
+const targetUnit = computed(
+  () => editorDataStore.targetList[index]?.targetUnit
+);
 
 const onChange = () => {
-  let text = editorDataStore.activeTarget?.text;
+  let text = editorDataStore.targetList[index]?.text;
   if (text) text = text.slice(0, text.length - 1);
   const newText = text + " " + inputText.value + targetUnit.value;
-
-  editorDataStore.updateTarget({ target: inputText.value }, index.value);
-  editorDataStore.updateTarget({ text: newText }, index.value);
-  editorSettingsStore.togglePopupTargetInput(false);
+  editorDataStore.updateTarget({ target: inputText.value }, index);
+  editorDataStore.updateTarget({ text: newText }, index);
+  editorDataStore.updateTarget({ showPopupTarget: false }, index);
   inputText.value = "";
 };
 
@@ -73,8 +73,8 @@ watch(
   () => toggle.value,
   (val) => {
     if (val) {
-      editorSettingsStore.toggleDatePicker(false);
-      editorSettingsStore.toggleListSuggestions(false);
+      editorDataStore.updateTarget({ showPopupList: false }, index);
+      editorDataStore.updateTarget({ showPopupDeadline: false }, index);
     }
   }
 );

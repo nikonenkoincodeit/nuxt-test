@@ -18,14 +18,13 @@
 </template>
     
     <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppDatePicker from "./AppDatePicker.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
 const inputRef = ref(null);
@@ -46,29 +45,33 @@ const myText = computed({
     return editorDataStore.targetList[index]?.text;
   },
   set(value) {
-    console.log(" index ", index);
     editorDataStore.updateTarget({ text: value }, index);
   },
 });
 
 const onFocus = () => {
-  console.log("onFocus");
-  editorSettingsStore.updateActiveItem(index);
+  editorDataStore.updateActiveItem(index);
 };
 
 const handleInput = (e) => {
   inputText.value = e.target.value.trim();
   const lastChar = inputText.value.slice(-1);
-  editorSettingsStore.toggleListSuggestions(lastChar === "/");
-
-  cursorPosition.value = {
-    top: 10,
-    left: spanRef.value.offsetWidth + 10,
-  };
+  editorDataStore.updateTarget({ showPopupList: lastChar === "/" }, index);
 };
+
+watch(
+  () => myText.value,
+  async () => {
+    await nextTick();
+    cursorPosition.value = {
+      top: 10,
+      left: spanRef.value.offsetWidth + 10,
+    };
+  }
+);
 </script>
     
-    <style scoped>
+<style scoped>
 .form {
   margin-top: 20px;
   padding-bottom: 30px;

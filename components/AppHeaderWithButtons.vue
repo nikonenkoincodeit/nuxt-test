@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-between items-center" :data-index="index">
-    <h1 class="text-2xl font-bold">Target definition</h1>
+  <div class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold py-3">Target definition</h1>
     <div class="flex gap-3">
       <button
         v-if="showBtnTarget"
@@ -22,31 +22,28 @@
   
   <script setup>
 import { computed } from "vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
-const index = computed(() => editorSettingsStore.getActiveItem);
+const index = computed(() => editorDataStore.getActiveItem);
 
-console.log("index ", index.value);
+const data = computed(() => editorDataStore.targetList[index.value]);
 
-const showBtnTarget = computed(() => {
-  console.log(editorDataStore.targetList[index.value]?.target);
-  return !editorDataStore.targetList[index.value]?.target;
-});
+const showBtnTarget = computed(
+  () => !editorDataStore.targetList[index.value]?.target
+);
 
 const showBtnDeadline = computed(
   () => !editorDataStore.targetList[index.value]?.deadline
 );
 
 const selectTarget = () => {
-  editorSettingsStore.togglePopupTargetInput(true);
+  editorDataStore.updateTarget({ showPopupTarget: true }, index.value);
 };
 
 const selectDeadline = () => {
-  editorSettingsStore.toggleDatePicker(true);
+  editorDataStore.updateTarget({ showPopupDeadline: true }, index.value);
 };
 </script>
   

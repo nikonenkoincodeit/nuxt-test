@@ -22,6 +22,10 @@ import { ref } from "vue";
 import { useEditorDataStore } from "~/stores/editor-data";
 const editorDataStore = useEditorDataStore();
 
+const index = computed(() => editorDataStore.getActiveItem);
+
+const data = computed(() => editorDataStore.targetList[index.value]);
+
 const props = defineProps({
   label: {
     type: String,
@@ -31,30 +35,22 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  method: {
-    type: String,
-    required: true,
-  },
   keyVal: {
     type: String,
     required: true,
   },
 });
 
-const emit = defineEmits(["select-parameter"]);
+// const emit = defineEmits(["select-parameter"]);
 
 const selectedValue = computed({
   get() {
-    return editorDataStore.activeTarget[props.keyVal];
+    return data.value[props.keyVal];
   },
   set(value) {
-    editorDataStore[props.method]({ [props.keyVal]: value });
+    editorDataStore.updateTarget({ [props.keyVal]: value }, index.value);
   },
 });
-
-// const handleRadioChange = () => {
-//   emit("select-parameter", selectedValue.value);
-// };
 </script>
   
   <style scoped>

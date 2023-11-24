@@ -10,9 +10,9 @@
     <ul class="bg-white border rounded shadow-md">
       <li>
         <button
-          :disabled="targetBtn"
           type="button"
           @click="addTarget"
+          :disabled="targetBtn"
           class="text-center py-2 w-full hover:bg-gray-300"
         >
           insert target
@@ -20,8 +20,8 @@
       </li>
       <li>
         <button
-          :disabled="deadlineBtn"
           type="button"
+          :disabled="deadlineBtn"
           @click="addDeadline"
           class="text-center py-2 w-full hover:bg-gray-300"
         >
@@ -33,13 +33,10 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
+import { computed, toRefs } from "vue";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
-
 const props = defineProps({
   cursorPosition: {
     type: Object,
@@ -49,32 +46,29 @@ const props = defineProps({
   },
 });
 
-const targetBtn = computed(() => !!editorDataStore.activeTarget?.target);
-const deadlineBtn = computed(() => !!editorDataStore.activeTarget?.deadline);
+const index = props.index;
 
-const toggle = computed(
-  () =>
-    editorSettingsStore.allSetting[props.index]?.suggestions &&
-    !(
-      editorDataStore.activeTarget?.target &&
-      editorDataStore.activeTarget?.deadline
-    )
+const targetBtn = computed(() => !!editorDataStore.targetList[index]?.target);
+const deadlineBtn = computed(
+  () => !!editorDataStore.targetList[index]?.deadline
 );
 
+const toggle = computed(() => editorDataStore.targetList[index]?.showPopupList);
+
 const addTarget = () => {
-  editorSettingsStore.togglePopupTargetInput(true);
+  editorDataStore.updateTarget({ showPopupTarget: true }, index);
 };
 
 const addDeadline = () => {
-  editorSettingsStore.toggleDatePicker(true);
+  editorDataStore.updateTarget({ showPopupDeadline: true }, index);
 };
 
 watch(
   () => toggle.value,
   (val) => {
     if (val) {
-      editorSettingsStore.toggleDatePicker(false);
-      editorSettingsStore.togglePopupTargetInput(false);
+      editorDataStore.updateTarget({ showPopupDeadline: false }, index);
+      editorDataStore.updateTarget({ showPopupTarget: false }, index);
     }
   }
 );

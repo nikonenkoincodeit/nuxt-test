@@ -27,7 +27,6 @@ const target = computed(() => {
 
 const addTarget = () => {
   editorDataStore.addTargetInList();
-  editorSettingsStore.addActiveItem();
 };
 </script>
   

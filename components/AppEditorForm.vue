@@ -25,37 +25,13 @@ const spanRef = ref(null);
 const cursorPosition = ref({ top: 10, left: 0 });
 
 const list = computed(() => editorDataStore.targetList.length);
-console.log(list.value);
-const inputText = computed({
-  get() {
-    return editorDataStore.activeTarget?.text;
-  },
-  set(value) {
-    editorDataStore.updateTarget({ text: value });
-  },
-});
 
-// const handleInput = (e) => {
-//   const lastChar = e.target.value.slice(-1);
-//   //   const lastCharIndex = inputText.selectionStart
-//   editorSettingsStore.toggleListSuggestions(lastChar === "/");
-
-//   cursorPosition.value = {
-//     top: 10,
-//     left: spanRef.value.offsetWidth + 10,
-//   };
+// const handleKeyDown = (event) => {
+//   if (event.key === "Enter" || event.key === "Tab") {
+//     editorSettingsStore.togglePopupTargetInput(false);
+//     editorSettingsStore.toggleListSuggestions(false);
+//   }
 // };
-
-// const submitForm = () => {
-//   console.log(inputText.value);
-// };
-
-const handleKeyDown = (event) => {
-  if (event.key === "Enter" || event.key === "Tab") {
-    editorSettingsStore.togglePopupTargetInput(false);
-    editorSettingsStore.toggleListSuggestions(false);
-  }
-};
 </script>
   
   <style scoped>
