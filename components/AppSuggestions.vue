@@ -40,9 +40,12 @@ import { useEditorDataStore } from "~/stores/editor-data";
 const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
-defineProps({
+const props = defineProps({
   cursorPosition: {
     type: Object,
+  },
+  index: {
+    type: Number,
   },
 });
 
@@ -51,7 +54,7 @@ const deadlineBtn = computed(() => !!editorDataStore.activeTarget?.deadline);
 
 const toggle = computed(
   () =>
-    editorSettingsStore.showListSuggestions &&
+    editorSettingsStore.allSetting[props.index]?.suggestions &&
     !(
       editorDataStore.activeTarget?.target &&
       editorDataStore.activeTarget?.deadline

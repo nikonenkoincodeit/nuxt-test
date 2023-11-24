@@ -1,4 +1,8 @@
+import { useEditorSettingsStore } from "~/stores/editor-settings";
+
 export const useEditorDataStore = defineStore("editor-data", () => {
+  const editorSettingsStore = useEditorSettingsStore();
+
   const item = {
     target: "",
     deadline: "",
@@ -9,7 +13,9 @@ export const useEditorDataStore = defineStore("editor-data", () => {
 
   const targets = ref([{ ...item }]);
 
-  const activeTarget = computed(() => targets.value.at(-1));
+  const activeTarget = computed(
+    () => targets.value[editorSettingsStore.getActiveItem]
+  );
 
   const targetList = computed(() => targets.value);
 
@@ -17,8 +23,8 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     targets.value.push({ ...item });
   }
 
-  function updateTarget(value) {
-    const index = targets.value.length - 1;
+  function updateTarget(value, index = -1) {
+    if (index === -1) index = targets.value.length - 1;
     targets.value[index] = { ...activeTarget.value, ...value };
   }
 

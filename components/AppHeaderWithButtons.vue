@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center" :data-index="index">
     <h1 class="text-2xl font-bold">Target definition</h1>
     <div class="flex gap-3">
       <button
@@ -28,9 +28,18 @@ import { useEditorDataStore } from "~/stores/editor-data";
 const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
-const showBtnTarget = computed(() => !editorDataStore.activeTarget?.target);
+const index = computed(() => editorSettingsStore.getActiveItem);
 
-const showBtnDeadline = computed(() => !editorDataStore.activeTarget?.deadline);
+console.log("index ", index.value);
+
+const showBtnTarget = computed(() => {
+  console.log(editorDataStore.targetList[index.value]?.target);
+  return !editorDataStore.targetList[index.value]?.target;
+});
+
+const showBtnDeadline = computed(
+  () => !editorDataStore.targetList[index.value]?.deadline
+);
 
 const selectTarget = () => {
   editorSettingsStore.togglePopupTargetInput(true);

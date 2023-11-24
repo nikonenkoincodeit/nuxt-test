@@ -1,22 +1,6 @@
 <template>
   <div>
-    <form
-      @submit.prevent="submitForm"
-      class="form w-full border mt-4 bg-gray-100"
-    >
-      <span ref="spanRef" class="hide">{{ inputText }}</span>
-      <input
-        id="textInput"
-        ref="inputRef"
-        v-model="inputText"
-        @input="handleInput"
-        @keydown="handleKeyDown"
-        class="border p-2 w-full focus:border-blue-500 bg-gray-100"
-      />
-      <AppSuggestions :cursorPosition="cursorPosition" />
-      <AppInputTarget :cursorPosition="cursorPosition" />
-      <AppDatePicker :cursorPosition="cursorPosition" />
-    </form>
+    <AppForm v-for="item of list" :key="item" :index="item" />
     <AppAddNewTarget />
     <AppButtonList />
   </div>
@@ -28,6 +12,7 @@ import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppButtonList from "./AppButtonList.vue";
 import AppAddNewTarget from "./AppAddNewTarget.vue";
+import AppForm from "./AppForm.vue";
 import AppDatePicker from "./AppDatePicker.vue";
 import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
@@ -39,6 +24,8 @@ const inputRef = ref(null);
 const spanRef = ref(null);
 const cursorPosition = ref({ top: 10, left: 0 });
 
+const list = computed(() => editorDataStore.targetList.length);
+console.log(list.value);
 const inputText = computed({
   get() {
     return editorDataStore.activeTarget?.text;
@@ -48,26 +35,20 @@ const inputText = computed({
   },
 });
 
-const dateList = [
-  { label: "Year", value: "year" },
-  { label: "Month", value: "month" },
-  { label: "Day", value: "day" },
-];
+// const handleInput = (e) => {
+//   const lastChar = e.target.value.slice(-1);
+//   //   const lastCharIndex = inputText.selectionStart
+//   editorSettingsStore.toggleListSuggestions(lastChar === "/");
 
-const handleInput = (e) => {
-  const lastChar = inputText.value.slice(-1);
-  //   const lastCharIndex = inputText.selectionStart
-  editorSettingsStore.toggleListSuggestions(lastChar === "/");
+//   cursorPosition.value = {
+//     top: 10,
+//     left: spanRef.value.offsetWidth + 10,
+//   };
+// };
 
-  cursorPosition.value = {
-    top: 10,
-    left: spanRef.value.offsetWidth + 10,
-  };
-};
-
-const submitForm = () => {
-  console.log(inputText.value);
-};
+// const submitForm = () => {
+//   console.log(inputText.value);
+// };
 
 const handleKeyDown = (event) => {
   if (event.key === "Enter" || event.key === "Tab") {

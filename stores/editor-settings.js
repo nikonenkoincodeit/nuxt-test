@@ -1,38 +1,57 @@
 export const useEditorSettingsStore = defineStore("editor-settings", () => {
-  const listSuggestions = ref(false);
+  const item = { suggestions: false, target: false, datePicker: false };
 
-  const showListSuggestions = computed(() => listSuggestions.value);
+  const setting = ref([{ ...item }]);
+
+  const activeItem = ref(0);
+
+  const getActiveItem = computed(() => activeItem.value);
+
+  const allSetting = computed(() => setting.value);
+
+  function updateActiveItem(value) {
+    activeItem.value = +value;
+  }
+
+  function addActiveItem() {
+    setting.value.push({ ...item });
+  }
+
+  //---------
 
   function toggleListSuggestions(value) {
-    listSuggestions.value = value;
+    setting.value[getActiveItem.value].suggestions = value;
   }
 
   //------------
 
-  const popupTargetInput = ref(false);
-
-  const showPopupTargetInput = computed(() => popupTargetInput.value);
+  const showPopupTargetInput = computed(
+    () => setting.value[getActiveItem.value].target
+  );
 
   function togglePopupTargetInput(value) {
-    popupTargetInput.value = value;
+    setting.value[getActiveItem.value].target = value;
   }
 
   //------------
 
-  const datePicker = ref(false);
-
-  const showDatePicker = computed(() => datePicker.value);
+  const showDatePicker = computed(
+    () => setting.value[getActiveItem.value].datePicker
+  );
 
   function toggleDatePicker(value) {
-    datePicker.value = value;
+    setting.value[getActiveItem.value].datePicker = value;
   }
 
   return {
-    showListSuggestions,
     toggleListSuggestions,
     showPopupTargetInput,
     togglePopupTargetInput,
     showDatePicker,
     toggleDatePicker,
+    updateActiveItem,
+    addActiveItem,
+    getActiveItem,
+    allSetting,
   };
 });

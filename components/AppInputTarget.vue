@@ -32,16 +32,22 @@ import { useEditorDataStore } from "~/stores/editor-data";
 const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
-defineProps({
+const props = defineProps({
   cursorPosition: {
     type: Object,
+  },
+  index: {
+    type: Number,
   },
 });
 
 const inputRef = ref(null);
 const inputText = ref("");
-
-const toggle = computed(() => editorSettingsStore.showPopupTargetInput);
+const index = computed(() => editorSettingsStore.getActiveItem);
+console.log("index ", index.value);
+const toggle = computed(
+  () => editorSettingsStore.allSetting[props.index]?.target
+);
 
 const targetUnit = computed(() => editorDataStore.activeTarget?.targetUnit);
 
@@ -49,8 +55,9 @@ const onChange = () => {
   let text = editorDataStore.activeTarget?.text;
   if (text) text = text.slice(0, text.length - 1);
   const newText = text + " " + inputText.value + targetUnit.value;
-  editorDataStore.updateTarget({ target: inputText.value });
-  editorDataStore.updateTarget({ text: newText });
+
+  editorDataStore.updateTarget({ target: inputText.value }, index.value);
+  editorDataStore.updateTarget({ text: newText }, index.value);
   editorSettingsStore.togglePopupTargetInput(false);
   inputText.value = "";
 };

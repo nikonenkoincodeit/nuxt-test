@@ -2,7 +2,6 @@
   <div>
     <button
       @click="addTarget"
-      :disabled="target"
       class="w-full bg-white text-blue-500 hover:text-blue-700 text-left font-bold py-2 px-4 rounded border border-blue-500 mb-2"
     >
       + Add new target in another year
@@ -13,8 +12,10 @@
   <script setup>
 import { ref, computed } from "vue";
 import { useEditorDataStore } from "~/stores/editor-data";
+import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 const editorDataStore = useEditorDataStore();
+const editorSettingsStore = useEditorSettingsStore();
 
 const target = computed(() => {
   return !["target", "date", "baseline"]
@@ -26,6 +27,7 @@ const target = computed(() => {
 
 const addTarget = () => {
   editorDataStore.addTargetInList();
+  editorSettingsStore.addActiveItem();
 };
 </script>
   
