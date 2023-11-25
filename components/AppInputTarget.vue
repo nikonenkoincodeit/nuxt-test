@@ -26,7 +26,6 @@
   
   <script setup>
 import { ref, computed, watch } from "vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();

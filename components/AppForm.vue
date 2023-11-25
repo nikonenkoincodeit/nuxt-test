@@ -13,6 +13,7 @@
       <AppSuggestions :cursorPosition="cursorPosition" :index="index" />
       <AppInputTarget :cursorPosition="cursorPosition" :index="index" />
       <AppDatePicker :cursorPosition="cursorPosition" :index="index" />
+      <AppBaseline :index="index" />
     </form>
   </div>
 </template>
@@ -22,7 +23,7 @@ import { ref, computed, watch, nextTick } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppDatePicker from "./AppDatePicker.vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
+import AppBaseline from "./AppBaseline.vue";
 import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();

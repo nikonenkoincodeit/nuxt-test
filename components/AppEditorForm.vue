@@ -14,10 +14,9 @@ import AppButtonList from "./AppButtonList.vue";
 import AppAddNewTarget from "./AppAddNewTarget.vue";
 import AppForm from "./AppForm.vue";
 import AppDatePicker from "./AppDatePicker.vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
+
 const editorDataStore = useEditorDataStore();
 
 const inputRef = ref(null);

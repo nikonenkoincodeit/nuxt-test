@@ -12,10 +12,8 @@
   <script setup>
 import { ref, computed } from "vue";
 import { useEditorDataStore } from "~/stores/editor-data";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 
 const editorDataStore = useEditorDataStore();
-const editorSettingsStore = useEditorSettingsStore();
 
 const target = computed(() => {
   return !["target", "date", "baseline"]

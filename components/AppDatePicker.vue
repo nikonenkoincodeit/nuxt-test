@@ -14,10 +14,8 @@
   <script setup>
 import { ref } from "vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 
-const editorSettingsStore = useEditorSettingsStore();
 const editorDataStore = useEditorDataStore();
 
 const props = defineProps({

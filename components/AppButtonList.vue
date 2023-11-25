@@ -17,7 +17,6 @@
 
 <script setup>
 import AppRadioButtonList from "./AppRadioButtonList.vue";
-import { useEditorSettingsStore } from "~/stores/editor-settings";
 import { useEditorDataStore } from "~/stores/editor-data";
 import { targetUnit, dateList } from "~/data";
 
