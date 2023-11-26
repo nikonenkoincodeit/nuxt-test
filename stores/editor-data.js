@@ -21,6 +21,10 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     targets.value.push({ ...item });
   }
 
+  function onDragChange(items) {
+    targets.value = items;
+  }
+
   //--------
 
   const activeItem = ref(0);
@@ -36,6 +40,16 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     targets.value[num] = { ...data, ...value };
   }
 
+  const checkArrayObjects = computed(() => {
+    for (let i = 0; i < targetList.value.length; i++) {
+      const obj = targetList.value[i];
+      if (obj.target === "" || obj.deadline === "" || obj.baseline === "") {
+        return true;
+      }
+    }
+    return false;
+  });
+
   return {
     targetList,
     targetList,
@@ -44,5 +58,7 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     getActiveItem,
     updateActiveItem,
     updateTarget,
+    checkArrayObjects,
+    onDragChange,
   };
 });
