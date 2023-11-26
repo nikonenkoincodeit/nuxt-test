@@ -1,8 +1,8 @@
 <template>
   <div
-    v-if="toggle"
-    class="flex items-center justify-center shadow-md bg-gray-200 border p-2 absolute h-auto"
+    class="flex items-center justify-center shadow-md bg-gray-200 border p-2 absolute h-auto popup"
     :style="{
+      'z-index': 100,
       top: cursorPosition.top + 'px',
       left: cursorPosition.left + 'px',
     }"
@@ -43,10 +43,6 @@ const inputRef = ref(null);
 const inputText = ref("");
 const index = props.index;
 
-const toggle = computed(
-  () => editorDataStore.targetList[index]?.showPopupTarget
-);
-
 const targetUnit = computed(
   () => editorDataStore.targetList[index]?.targetUnit
 );
@@ -68,17 +64,19 @@ watch(
   }
 );
 
-watch(
-  () => toggle.value,
-  (val) => {
-    if (val) {
-      editorDataStore.updateTarget({ showPopupList: false }, index);
-      editorDataStore.updateTarget({ showPopupDeadline: false }, index);
-    }
+const closePopup = (event) => {
+  if (!event.target.closest(".popup")) {
+    editorDataStore.updateTarget({ showPopupTarget: false }, index);
   }
-);
+};
+
+onMounted(() => {
+  window.addEventListener("click", closePopup);
+  editorDataStore.updateTarget({ showPopupList: false }, index);
+  editorDataStore.updateTarget({ showPopupDeadline: false }, index);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("click", closePopup);
+});
 </script>
-  
-  <style scoped>
-</style>
-  

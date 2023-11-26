@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="popup">
     <label class="block font-bold text-gray-700 mb-2">{{ label }}</label>
     <div>
       <template v-for="item in list" :key="item.value">
@@ -43,10 +43,12 @@ const props = defineProps({
 
 const selectedValue = computed({
   get() {
-    return data.value[props.keyVal];
+    if (props.keyVal === "baseline") return editorDataStore.getBaseline;
+    else return data.value[props.keyVal];
   },
   set(value) {
-    editorDataStore.updateTarget({ [props.keyVal]: value }, index.value);
+    if (props.keyVal === "baseline") editorDataStore.updateBaseline(value);
+    else editorDataStore.updateTarget({ [props.keyVal]: value }, index.value);
   },
 });
 </script>

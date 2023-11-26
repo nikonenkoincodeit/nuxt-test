@@ -1,8 +1,8 @@
 <template>
   <div
-    v-if="toggle"
-    class="list absolute mt-1 w-40"
+    class="list absolute mt-1 w-40 popup"
     :style="{
+      'z-index': 100,
       top: cursorPosition.top + 'px',
       left: cursorPosition.left + 'px',
     }"
@@ -53,8 +53,6 @@ const deadlineBtn = computed(
   () => !!editorDataStore.targetList[index]?.deadline
 );
 
-const toggle = computed(() => editorDataStore.targetList[index]?.showPopupList);
-
 const addTarget = () => {
   editorDataStore.updateTarget({ showPopupTarget: true }, index);
 };
@@ -63,15 +61,21 @@ const addDeadline = () => {
   editorDataStore.updateTarget({ showPopupDeadline: true }, index);
 };
 
-watch(
-  () => toggle.value,
-  (val) => {
-    if (val) {
-      editorDataStore.updateTarget({ showPopupDeadline: false }, index);
-      editorDataStore.updateTarget({ showPopupTarget: false }, index);
-    }
+const closePopup = (event) => {
+  if (!event.target.closest(".popup")) {
+    editorDataStore.updateTarget({ showPopupList: false }, index);
   }
-);
+};
+
+onMounted(() => {
+  window.addEventListener("click", closePopup);
+  editorDataStore.updateTarget({ showPopupDeadline: false }, index);
+  editorDataStore.updateTarget({ showPopupTarget: false }, index);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("click", closePopup);
+});
 </script>
 
 <style scoped>

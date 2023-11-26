@@ -1,15 +1,11 @@
 <template>
-  <div class="border rounded-lg baseline-box" v-if="showBtnBaseline">
-    <button
-      type="button"
-      v-if="!showDatepicker"
-      @click="onClick"
-      class="px-5 rounded-md"
-    >
+  <div class="baseline-box" v-if="showBtnBaseline">
+    <button type="button" class="border rounded-lg py-2 px-4" @click="onClick">
       Baseline {{ baseline }}
     </button>
 
     <VueDatePicker
+      class="date-picker"
       :model-value="date"
       @update:model-value="handleDate"
       v-if="showDatepicker"
@@ -24,43 +20,34 @@ import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();
 
-const props = defineProps({
-  index: {
-    type: Number,
-  },
-});
-
 const selectedDate = ref(null);
 const date = ref(null);
-const index = props.index;
 
-const showDatepicker = computed(
-  () => editorDataStore.targetList[index]?.showPopupBaseline
-);
+const showDatepicker = computed(() => editorDataStore.getShowPopupBaseline);
 
-const baseline = computed(() => editorDataStore.targetList[index]?.baseline);
+const baseline = computed(() => editorDataStore.getBaseline);
 
 const handleDate = (modelData) => {
   date.value = modelData.toDateString();
-  editorDataStore.updateTarget({ baseline: date.value }, index);
+  editorDataStore.updateBaseline(date.value);
 };
 
 const onClick = () => {
-  if (editorDataStore.targetList[index]?.baseline) return;
-  editorDataStore.updateTarget({ showPopupBaseline: true }, index);
+  if (baseline.value) return;
+  editorDataStore.togglePopupBaseline(true);
 };
 
 const showBtnBaseline = computed(
   () =>
-    editorDataStore.targetList[index]?.deadline &&
-    editorDataStore.targetList[index]?.target
+    editorDataStore.targetList[0]?.deadline &&
+    editorDataStore.targetList[0]?.target
 );
 
 watch(
   () => baseline.value,
   (val) => {
     if (val) {
-      editorDataStore.updateTarget({ showPopupBaseline: false }, index);
+      editorDataStore.togglePopupBaseline(false);
     }
   }
 );
@@ -68,9 +55,12 @@ watch(
 
   <style scoped>
 .baseline-box {
+  position: relative;
+}
+.date-picker {
   position: absolute;
-  right: 0;
-  bottom: 2px;
+  top: 0;
+  left: 0;
 }
 </style>
   

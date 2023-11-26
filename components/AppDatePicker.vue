@@ -1,8 +1,8 @@
 <template>
   <div
-    v-if="toggle"
-    class="my-date-picker"
+    class="my-date-picker popup"
     :style="{
+      'z-index': 100,
       top: cursorPosition.top + 'px',
       left: cursorPosition.left + 'px',
     }"
@@ -29,10 +29,6 @@ const props = defineProps({
 
 const index = props.index;
 
-const toggle = computed(
-  () => editorDataStore.targetList[index]?.showPopupDeadline
-);
-
 const deadline = computed(() => editorDataStore.targetList[index]?.deadline);
 const text = computed(() => editorDataStore.targetList[index]?.text);
 
@@ -52,15 +48,21 @@ watch(
   }
 );
 
-watch(
-  () => toggle.value,
-  (val) => {
-    if (val) {
-      editorDataStore.updateTarget({ showPopupList: false }, index);
-      editorDataStore.updateTarget({ showPopupTarget: false }, index);
-    }
+const closePopup = (event) => {
+  if (!event.target.closest(".popup")) {
+    editorDataStore.updateTarget({ showPopupDeadline: false }, index);
   }
-);
+};
+
+onMounted(() => {
+  window.addEventListener("click", closePopup);
+  editorDataStore.updateTarget({ showPopupList: false }, index);
+  editorDataStore.updateTarget({ showPopupTarget: false }, index);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("click", closePopup);
+});
 </script>
   <style scoped>
 .my-date-picker {

@@ -10,10 +10,21 @@
         v-model.trim="myText"
         class="border p-2 w-full focus:border-blue-500 bg-gray-100"
       />
-      <AppSuggestions :cursorPosition="cursorPosition" :index="index" />
-      <AppInputTarget :cursorPosition="cursorPosition" :index="index" />
-      <AppDatePicker :cursorPosition="cursorPosition" :index="index" />
-      <AppBaseline :index="index" />
+      <AppSuggestions
+        :cursorPosition="cursorPosition"
+        :index="index"
+        v-if="toggleList"
+      />
+      <AppInputTarget
+        :cursorPosition="cursorPosition"
+        :index="index"
+        v-if="toggleTarget"
+      />
+      <AppDatePicker
+        :cursorPosition="cursorPosition"
+        :index="index"
+        v-if="toggle"
+      />
     </form>
   </div>
 </template>
@@ -23,7 +34,7 @@ import { ref, computed, watch, nextTick } from "vue";
 import AppSuggestions from "./AppSuggestions.vue";
 import AppInputTarget from "./AppInputTarget.vue";
 import AppDatePicker from "./AppDatePicker.vue";
-import AppBaseline from "./AppBaseline.vue";
+
 import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();
@@ -40,6 +51,18 @@ const props = defineProps({
 });
 
 const index = props.index - 1;
+
+const toggle = computed(
+  () => editorDataStore.targetList[index]?.showPopupDeadline
+);
+
+const toggleTarget = computed(
+  () => editorDataStore.targetList[index]?.showPopupTarget
+);
+
+const toggleList = computed(
+  () => editorDataStore.targetList[index]?.showPopupList
+);
 
 const myText = computed({
   get() {
@@ -74,7 +97,6 @@ watch(
     
 <style scoped>
 .form {
-  padding-bottom: 30px;
   position: relative;
 }
 .hide {

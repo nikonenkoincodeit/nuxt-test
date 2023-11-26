@@ -40,17 +40,9 @@ const selectedUnit = computed(
   () => editorDataStore.targetList[index.value]?.targetUnit
 );
 
-const showBtnBaseline = computed(
-  () =>
-    editorDataStore.targetList[index.value]?.deadline &&
-    editorDataStore.targetList[index.value]?.target &&
-    editorDataStore.targetList[index.value]?.showPopupBaseline
-);
+const showBtnBaseline = computed(() => editorDataStore.getShowPopupBaseline);
 
 const selectParameter = (value) => {
   console.log("value ", value);
 };
 </script>
-
-<style>
-</style>

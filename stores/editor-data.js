@@ -8,7 +8,6 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     showPopupList: false,
     showPopupTarget: false,
     showPopupDeadline: false,
-    showPopupBaseline: false,
   };
 
   const targets = ref([{ ...item }]);
@@ -23,6 +22,34 @@ export const useEditorDataStore = defineStore("editor-data", () => {
 
   function onDragChange(items) {
     targets.value = items;
+  }
+
+  //--------
+
+  const baseline = ref("");
+
+  const getBaseline = computed(() => baseline.value);
+
+  function updateBaseline(value) {
+    baseline.value = value;
+  }
+
+  const showPopupBaseline = ref(false);
+
+  const getShowPopupBaseline = computed(() => showPopupBaseline.value);
+
+  function togglePopupBaseline(value) {
+    showPopupBaseline.value = value;
+  }
+
+  //----
+
+  const btnBaseline = ref(true);
+
+  const getBtnBaseline = computed(() => btnBaseline.value);
+
+  function toggleBtnBaseline(value) {
+    btnBaseline.value = value;
   }
 
   //--------
@@ -43,7 +70,7 @@ export const useEditorDataStore = defineStore("editor-data", () => {
   const checkArrayObjects = computed(() => {
     for (let i = 0; i < targetList.value.length; i++) {
       const obj = targetList.value[i];
-      if (obj.target === "" || obj.deadline === "" || obj.baseline === "") {
+      if (obj.target === "" || obj.deadline === "") {
         return true;
       }
     }
@@ -60,5 +87,11 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     updateTarget,
     checkArrayObjects,
     onDragChange,
+    getBaseline,
+    updateBaseline,
+    getShowPopupBaseline,
+    togglePopupBaseline,
+    getBtnBaseline,
+    toggleBtnBaseline,
   };
 });

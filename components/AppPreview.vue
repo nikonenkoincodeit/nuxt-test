@@ -1,18 +1,18 @@
 <template>
-  <div class="bg-gray-200">
-    <div class="flex items-center p-2">
+  <div class="bg-gray-200 p-2">
+    <div class="flex items-center mb-2">
       <img :src="icon" alt="icon" width="20" />
       <h2 class="text-xl font-bold ml-2">Target</h2>
     </div>
     <draggable :list="list" tag="transition-group">
       <template #item="{ element }">
-        <div class="bg-gray-200 p-4 rounded mb-1">
+        <div class="bg-gray-200 rounded mb-1">
           <p class="text-gray-700 mb-2">{{ element.text }}</p>
         </div>
       </template>
     </draggable>
-    <p class="text-right m-1">
-      <span class="border border-gray-500 rounded">Baseline {{}}</span>
+    <p class="text-right m-1" v-if="baseline">
+      <span>Baseline {{ baseline }}</span>
     </p>
   </div>
 </template>
@@ -33,5 +33,7 @@ const list = computed({
     return editorDataStore.onDragChange(value);
   },
 });
+
+const baseline = computed(() => editorDataStore.getBaseline);
 </script>
 

@@ -8,14 +8,11 @@
   
   <script setup>
 import { ref, computed } from "vue";
-import AppSuggestions from "./AppSuggestions.vue";
-import AppInputTarget from "./AppInputTarget.vue";
+
 import AppButtonList from "./AppButtonList.vue";
 import AppAddNewTarget from "./AppAddNewTarget.vue";
 import AppForm from "./AppForm.vue";
-import AppDatePicker from "./AppDatePicker.vue";
 import { useEditorDataStore } from "~/stores/editor-data";
-
 
 const editorDataStore = useEditorDataStore();
 
@@ -25,12 +22,6 @@ const cursorPosition = ref({ top: 10, left: 0 });
 
 const list = computed(() => editorDataStore.targetList.length);
 
-// const handleKeyDown = (event) => {
-//   if (event.key === "Enter" || event.key === "Tab") {
-//     editorSettingsStore.togglePopupTargetInput(false);
-//     editorSettingsStore.toggleListSuggestions(false);
-//   }
-// };
 </script>
   
   <style scoped>

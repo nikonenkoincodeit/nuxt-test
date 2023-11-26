@@ -4,14 +4,14 @@
     <div class="flex gap-3">
       <button
         v-if="showBtnTarget"
-        class="py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white rounded"
+        class="py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white rounded popup"
         @click="selectTarget"
       >
         insert target
       </button>
       <button
         v-if="showBtnDeadline"
-        class="py-2 px-4 bg-red-500 hover:bg-red-700 text-white rounded"
+        class="py-2 px-4 bg-red-500 hover:bg-red-700 text-white rounded popup"
         @click="selectDeadline"
       >
         insert deadline
@@ -19,7 +19,7 @@
 
       <button
         v-if="showBtnBaseline"
-        class="py-2 px-4 bg-green-500 hover:bg-green-700 text-white rounded"
+        class="py-2 px-4 bg-green-500 hover:bg-green-700 text-white rounded popup"
         @click="selectBaseline"
       >
         insert baseline
@@ -50,7 +50,7 @@ const showBtnBaseline = computed(
   () =>
     !showBtnTarget.value &&
     !showBtnDeadline.value &&
-    !editorDataStore.targetList[index.value]?.baseline
+    !editorDataStore.getBaseline
 );
 
 const selectTarget = () => {
@@ -62,9 +62,8 @@ const selectDeadline = () => {
 };
 
 const selectBaseline = () => {
-  editorDataStore.updateTarget({ showPopupBaseline: true }, index.value);
+  editorDataStore.togglePopupBaseline(true);
 };
 </script>
   
-  <style scoped>
-</style>
+ 
