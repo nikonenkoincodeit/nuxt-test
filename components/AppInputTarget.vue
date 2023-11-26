@@ -25,8 +25,6 @@
 </template>
   
   <script setup>
-import { ref, computed, watch } from "vue";
-import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();
 

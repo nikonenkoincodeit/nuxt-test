@@ -20,8 +20,6 @@
 </template>
 
 <script setup>
-import AppRadioButtonList from "./AppRadioButtonList.vue";
-import { useEditorDataStore } from "~/stores/editor-data";
 import { targetUnit, dateList } from "~/data";
 
 const editorDataStore = useEditorDataStore();

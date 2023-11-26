@@ -6,13 +6,7 @@
   </div>
 </template>
   
-  <script setup>
-import { ref, computed } from "vue";
-
-import AppButtonList from "./AppButtonList.vue";
-import AppAddNewTarget from "./AppAddNewTarget.vue";
-import AppForm from "./AppForm.vue";
-import { useEditorDataStore } from "~/stores/editor-data";
+<script setup>
 
 const editorDataStore = useEditorDataStore();
 
@@ -21,7 +15,6 @@ const spanRef = ref(null);
 const cursorPosition = ref({ top: 10, left: 0 });
 
 const list = computed(() => editorDataStore.targetList.length);
-
 </script>
   
   <style scoped>

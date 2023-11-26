@@ -29,13 +29,7 @@
   </div>
 </template>
     
-    <script setup>
-import { ref, computed, watch, nextTick } from "vue";
-import AppSuggestions from "./AppSuggestions.vue";
-import AppInputTarget from "./AppInputTarget.vue";
-import AppDatePicker from "./AppDatePicker.vue";
-
-import { useEditorDataStore } from "~/stores/editor-data";
+<script setup>
 
 const editorDataStore = useEditorDataStore();
 

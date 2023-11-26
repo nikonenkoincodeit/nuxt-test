@@ -12,10 +12,6 @@
 </template>
   
   <script setup>
-import { ref, computed } from "vue";
-import AppBaseline from "./AppBaseline.vue";
-import { useEditorDataStore } from "~/stores/editor-data";
-
 const editorDataStore = useEditorDataStore();
 
 const target = computed(() => editorDataStore.checkArrayObjects);

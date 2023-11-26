@@ -14,9 +14,7 @@
 </template>
   
   <script setup>
-import { ref, watch } from "vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
-import { useEditorDataStore } from "~/stores/editor-data";
 
 const editorDataStore = useEditorDataStore();
 

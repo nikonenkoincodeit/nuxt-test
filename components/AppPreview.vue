@@ -18,9 +18,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
 import draggable from "vuedraggable";
-import { useEditorDataStore } from "~/stores/editor-data";
 import icon from "~/assets/img/target.svg";
 
 const editorDataStore = useEditorDataStore();

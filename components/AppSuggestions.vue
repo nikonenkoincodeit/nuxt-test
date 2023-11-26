@@ -33,9 +33,6 @@
 </template>
 
 <script setup>
-import { computed, toRefs } from "vue";
-import { useEditorDataStore } from "~/stores/editor-data";
-
 const editorDataStore = useEditorDataStore();
 const props = defineProps({
   cursorPosition: {

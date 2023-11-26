@@ -18,8 +18,6 @@
 </template>
   
   <script setup>
-import { ref } from "vue";
-import { useEditorDataStore } from "~/stores/editor-data";
 const editorDataStore = useEditorDataStore();
 
 const index = computed(() => editorDataStore.getActiveItem);
