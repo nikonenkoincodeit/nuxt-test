@@ -5,6 +5,11 @@
       <h2 class="text-xl font-bold ml-2">{{ title }}</h2>
     </div>
     <p class="text-gray-700">{{ text }}</p>
+    <p class="text-right" v-if="baseline">
+      <span class="border border-gray-500 p-1 rounded"
+        >Baseline {{ baseline }}</span
+      >
+    </p>
   </div>
 </template>
   
@@ -16,6 +21,10 @@ const props = defineProps({
     required: true,
   },
   text: {
+    type: String,
+    required: true,
+  },
+  baseline: {
     type: String,
     required: true,
   },

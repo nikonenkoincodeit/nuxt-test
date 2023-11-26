@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form w-full border mt-4 bg-gray-100">
+    <form class="form w-full border bg-gray-100">
       <span ref="spanRef" class="hide">{{ myText }}</span>
       <input
         id="textInput"
@@ -74,7 +74,6 @@ watch(
     
 <style scoped>
 .form {
-  margin-top: 20px;
   padding-bottom: 30px;
   position: relative;
 }

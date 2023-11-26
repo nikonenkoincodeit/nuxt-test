@@ -4,6 +4,7 @@
     :key="item + '1'"
     title="target"
     :text="item.text"
+    :baseline="item.baseline"
   />
 </template>
 

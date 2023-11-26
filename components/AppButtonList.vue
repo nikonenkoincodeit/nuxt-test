@@ -4,14 +4,18 @@
     label="Target unit"
     :list="targetUnit"
     keyVal="targetUnit"
-    @select-parameter="selectParameter"
   />
   <AppRadioButtonList
     v-if="targetDeadline"
     label="Deadline"
     :list="dateList"
     keyVal="deadline"
-    @select-parameter="selectParameter"
+  />
+  <AppRadioButtonList
+    v-if="showBtnBaseline"
+    label="Baseline"
+    :list="dateList"
+    keyVal="baseline"
   />
 </template>
 
@@ -34,6 +38,13 @@ const targetDeadline = computed(
 
 const selectedUnit = computed(
   () => editorDataStore.targetList[index.value]?.targetUnit
+);
+
+const showBtnBaseline = computed(
+  () =>
+    editorDataStore.targetList[index.value]?.deadline &&
+    editorDataStore.targetList[index.value]?.target &&
+    editorDataStore.targetList[index.value]?.showPopupBaseline
 );
 
 const selectParameter = (value) => {

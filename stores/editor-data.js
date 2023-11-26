@@ -8,6 +8,7 @@ export const useEditorDataStore = defineStore("editor-data", () => {
     showPopupList: false,
     showPopupTarget: false,
     showPopupDeadline: false,
+    showPopupBaseline: false,
   };
 
   const targets = ref([{ ...item }]);

@@ -41,8 +41,6 @@ const props = defineProps({
   },
 });
 
-// const emit = defineEmits(["select-parameter"]);
-
 const selectedValue = computed({
   get() {
     return data.value[props.keyVal];

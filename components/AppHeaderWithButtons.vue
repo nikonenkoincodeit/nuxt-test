@@ -16,6 +16,14 @@
       >
         insert deadline
       </button>
+
+      <button
+        v-if="showBtnBaseline"
+        class="py-2 px-4 bg-green-500 hover:bg-green-700 text-white rounded"
+        @click="selectBaseline"
+      >
+        insert baseline
+      </button>
     </div>
   </div>
 </template>
@@ -38,12 +46,23 @@ const showBtnDeadline = computed(
   () => !editorDataStore.targetList[index.value]?.deadline
 );
 
+const showBtnBaseline = computed(
+  () =>
+    !showBtnTarget.value &&
+    !showBtnDeadline.value &&
+    !editorDataStore.targetList[index.value]?.baseline
+);
+
 const selectTarget = () => {
   editorDataStore.updateTarget({ showPopupTarget: true }, index.value);
 };
 
 const selectDeadline = () => {
   editorDataStore.updateTarget({ showPopupDeadline: true }, index.value);
+};
+
+const selectBaseline = () => {
+  editorDataStore.updateTarget({ showPopupBaseline: true }, index.value);
 };
 </script>
   
